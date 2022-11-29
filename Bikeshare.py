@@ -18,11 +18,8 @@ def get_filters():
     print('Hello! Let\'s explore some US bikeshare data!')
     # Get user input for city (chicago, new york city, washington). 
     while True:
-        city = input('Would you like to see data for Chicago, New York or Washington? ').lower()
-        if city in ['new york city', 'new york', 'ny']:
-            city = 'new york city'
-            break
-        elif city in ['chicago', 'new york city', 'washington']:
+        city = input('Would you like to see data for Chicago, New York City or Washington? ').lower()
+        if city in ['chicago', 'new york city', 'washington']:
             break 
         else:
             print('This is not a valid option for city. Please type it correctly.')
@@ -91,14 +88,14 @@ def load_data(city, month, day):
 
     # Filters by month if applicable  to create the new dataframe.
     if month != 'all':
-        month = ['january', 'february', 'march', 'april', 'may', 'june'].index(month) + 1
+        month_index = ['january', 'february', 'march', 'april', 'may', 'june'].index(month) + 1
         # filters by month to create the new dataframe
-        df = df[df['month'] == month]
+        df = df[df['month'] == month_index]
 
     # Filters by day of week if applicable to create the new dataframe.
     if day != 'all':
-        day = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].index(day) 
-        df = df[df['day_of_week'] == day]
+        day_index = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].index(day) 
+        df = df[df['day_of_week'] == day_index]
     
     return df
 
@@ -111,11 +108,11 @@ def time_stats(df):
 
     # Displays the most common month.
     popular_month = df['month'].mode()[0]
-    print('Most popular month: ', ['january', 'february', 'march', 'april', 'may', 'june'][popular_month - 1])
+    print(f"Most popular month: {['january', 'february', 'march', 'april', 'may', 'june'][popular_month - 1]}")
 
     # Displays the most common day of week.
     popular_day = df['day_of_week'].mode()[0]
-    print('Most popular day: ', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'][popular_day])
+    print(f"Most popular day: {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'][popular_day]}")
     
     # Displays the most common start hour.
     popular_hour = df['hour'].mode()[0]
@@ -133,15 +130,15 @@ def station_stats(df):
 
     # Displays most commonly used start station.
     popular_start = df['Start Station'].mode()[0]
-    print('Most popular start station: ', popular_start)
+    print(f'Most popular start station: {popular_start}')
 
     # Displays most commonly used end station.
     popular_end = df['End Station'].mode()[0]
-    print('Most popular end station: ', popular_end)
+    print(f'Most popular end station: {popular_end}')
 
     # Displays most frequent combination of start station and end station trip.
     popular_combination = (df['Start Station'] + ' - ' + df['End Station']).mode()[0]
-    print('Most popular combination start-end station: ', popular_combination)
+    print(f'Most popular combination start-end station: {popular_combination}')
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -153,11 +150,11 @@ def trip_duration_stats(df):
     print('\nCalculating Trip Duration...\n')
     start_time = time.time()
 
-    # Displays total travel time (in seconds).    
-    print('Total travel time: ', df['Trip Duration'].sum(), 'seconds')
+    # Displays total travel time (in seconds).
+    print(f"Total travel time: {df['Trip Duration'].sum()} seconds")
     
     # Displays mean travel time (in seconds).
-    print('Average travel time: ', df['Trip Duration'].mean(), 'seconds')
+    print(f"Average travel time: {df['Trip Duration'].mean()}seconds")
         
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -178,9 +175,9 @@ def user_stats(df, city):
         # Data only available for Chicago and New York City.
         print('\nCounts of gender: ')
         print(df['Gender'].value_counts())
-        print('\nEarliest year of birth: ', int(df['Birth Year'].min()))
-        print('Most recent year of birth: ', int(df['Birth Year'].max()))
-        print('Most common year of birth: ', int(df['Birth Year'].mode()[0]))
+        print(f"\nEarliest year of birth: {int(df['Birth Year'].min())}")
+        print(f"Most recent year of birth: {int(df['Birth Year'].max())}")
+        print(f"Most common year of birth: {int(df['Birth Year'].mode()[0])}")
     else:
         print(f'\nGender and birth data not available for {city.title()}')
               
